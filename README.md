@@ -3,4 +3,4 @@
 
 *Install*
 
-pip install -r "req.txt"
+pip install -r req.txt
