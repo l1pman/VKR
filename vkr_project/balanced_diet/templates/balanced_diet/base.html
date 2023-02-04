@@ -26,7 +26,7 @@
           {% if user.is_authenticated %}
           <li class="nav-item">
 
-                <a class="nav-link" href="">Моя диета</a>
+                <a class="nav-link" href="{% url 'balanced_diet:my_diet' %}">Моя диета</a>
               {% else %}
                 <a class="nav-link" href="{% url 'users:login' %}">Войти</a>
 
