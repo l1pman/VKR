@@ -17,7 +17,9 @@ def new_kcal(request):
     else:
         form = User_param_form(data=request.POST)
         if form.is_valid():
-            form.save()
+            new_kcal = form.save(commit=False)
+            new_kcal.owner = request.user
+            new_kcal.save()
             return redirect('balanced_diet:my_diet')
 
     context = {'form': form}
