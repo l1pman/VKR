@@ -2,11 +2,11 @@
 {% load crispy_forms_tags %}
 {% block content %}
 
-<form method="post" action="{% url 'users:login' %}">
+<form method="post" action="{% url 'users:register' %}">
     {% csrf_token %}
     {{ form|crispy }}
-    <button name="submit" class="btn btn-success mt-2">Log in</button>
+    <button name="submit" class="btn btn-success mt-2">Register</button>
     <input type="hidden" name="next" value="{% url 'balanced_diet:index' %}" />
-
 </form>
+
 {% endblock content %}
