@@ -28,7 +28,7 @@
 
                 <a class="nav-link" href="">Моя диета</a>
               {% else %}
-                <a class="nav-link" href="">Войти</a>
+                <a class="nav-link" href="{% url 'users:login' %}">Войти</a>
 
         </li>
           <li class="nav_item">
@@ -38,15 +38,16 @@
           {% endif %}
           {% if user.is_authenticated %}
           <li class="nav_item">
-                <a class="nav-link" href="">Выйти</a>
+                <a class="nav-link" href="{% url 'users:logout' %}">Выйти</a>
           </li>
           {% endif %}
       </ul>
     </div>
   </div>
 </nav>
+<div class="container text-center rounded" style=" max-width: 300px; display: flex; justify-content: center; align-items: center; height: 100%; ">
     {% block content %}{% endblock content %}
-
+</div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>
 </html>
