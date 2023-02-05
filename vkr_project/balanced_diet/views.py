@@ -6,6 +6,9 @@ from .models import User_param
 def index(request):
     return render(request, 'balanced_diet/index.html')
 
+def try_service(request):
+    return render(request, 'balanced_diet/try_service.html')
+
 @login_required
 def my_diet(request):
     return render(request, 'balanced_diet/my_diet.html')

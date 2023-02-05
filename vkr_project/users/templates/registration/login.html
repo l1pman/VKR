@@ -1,7 +1,7 @@
 {% extends "balanced_diet/base.html" %}
 {% load crispy_forms_tags %}
 {% block content %}
-
+<div style="max-width: 300px">
 <form method="post" action="{% url 'users:login' %}">
     {% csrf_token %}
     {{ form|crispy }}
@@ -9,4 +9,5 @@
     <input type="hidden" name="next" value="{% url 'balanced_diet:index' %}" />
 
 </form>
+</div>
 {% endblock content %}

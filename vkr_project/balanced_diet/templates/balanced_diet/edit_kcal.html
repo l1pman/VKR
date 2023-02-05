@@ -1,10 +1,11 @@
 {% extends "balanced_diet/base.html" %}
 {% load crispy_forms_tags %}
 {% block content %}
-
+<div style="max-width: 300px">
 <form method="post" action="{% url 'balanced_diet:edit_kcal' %}">
     {% csrf_token %}
     {{ form|crispy }}
     <button name="submit" class="btn btn-success mt-2">Сохранить</button>
 </form>
+</div>
 {% endblock content %}
