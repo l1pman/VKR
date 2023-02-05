@@ -2,4 +2,17 @@
 {% load crispy_forms_tags %}
 {% block content %}
 
+<div class="d-grid gap-2 col-6 mx-auto"style="max-width: 300px">
+    <form method="post" action="{% url 'balanced_diet:try_service' %}">
+        {% csrf_token %}
+        {{form|crispy}}
+        <p>{{ kcal }}</p>
+        <p>{{ prot }}</p>
+        <p>{{ fats }}</p>
+        <p>{{ carbs }}</p>
+        <button name="submit" class="btn btn-success mt-2">Сохранить</button>
+    </form>
+</div>
+
+
 {% endblock content %}
