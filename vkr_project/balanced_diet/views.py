@@ -41,3 +41,18 @@ def edit_kcal(request):
             return redirect('balanced_diet:my_diet')
     context = {'user': user, 'form': form}
     return render(request, 'balanced_diet/edit_kcal.html', context)
+
+
+@login_required
+def my_diet(request):
+    try:
+        kcal = User_param.get_kcal(User_param.objects.get(owner=request.user))
+        context = {
+            'kcal': kcal[0],
+            'prot': kcal[1],
+            'fats': kcal[2],
+            'carbs': kcal[3],
+        }
+        return render(request, 'balanced_diet/my_diet.html', context)
+    except User_param.DoesNotExist:
+        return render(request, 'balanced_diet/my_diet.html')

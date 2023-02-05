@@ -2,10 +2,16 @@
 {% block content %}
 
 <div class="d-grid gap-2 col-6 mx-auto">
-    <a class="btn btn-dark"  role="button" href="{% url 'balanced_diet:edit_kcal' %}">Изменить параметры</a>
+    {% if kcal is None %}
     <a class="btn btn-dark"  role="button" href="{% url 'balanced_diet:new_kcal' %}">Рассчитать КБЖУ</a>
+    {% else %}
+    <p>{{ kcal }}</p>
+    <p>{{ prot }}</p>
+    <p>{{ fats }}</p>
+    <p>{{ carbs }}</p>
+    <a class="btn btn-dark"  role="button" href="{% url 'balanced_diet:edit_kcal' %}">Изменить параметры</a>
     <a class="btn btn-dark"  type="button" href="">Составить меню</a>
-
+    {% endif %}
 </div>
 
 
