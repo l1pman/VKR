@@ -22,8 +22,6 @@ class User_param(models.Model):
     height = models.IntegerField()
     age = models.IntegerField()
     activity = models.CharField(max_length=50, choices=ACTIVITY_CHOICES, default='')
-    lactose = models.BooleanField(default=False)
-    vegan = models.BooleanField(default=False)
 
     def get_kcal(self):
         if self.gender == 'M':
