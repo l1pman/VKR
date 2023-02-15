@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from .forms import User_param_form, CalorieCalcForm
-from .models import User_param
+from .forms import User_param_form, CalorieCalcForm, User_progress_form
+from .models import User_param, User_progress
 # Create your views here.
 def index(request):
     return render(request, 'balanced_diet/index.html')
@@ -90,3 +90,19 @@ def my_diet(request):
         return render(request, 'balanced_diet/my_diet.html', context)
     except User_param.DoesNotExist:
         return render(request, 'balanced_diet/my_diet.html')
+
+
+@login_required
+def progress_charts(request):
+    if request.method != 'POST':
+        form = User_progress_form()
+    else:
+        form = User_progress_form(data=request.POST)
+        if form.is_valid():
+            progress_charts = form.save(commit=False)
+            progress_charts.owner = request.user
+            progress_charts.save()
+            return redirect('balanced_diet:progress_charts')
+
+    context = {'form': form}
+    return render(request, 'balanced_diet/progress_charts.html', context)

@@ -1,5 +1,5 @@
 from django import forms
-from .models import User_param
+from .models import User_param, User_progress
 from django.contrib.auth.models import User
 
 
@@ -8,6 +8,10 @@ class User_param_form(forms.ModelForm):
         model = User_param
         fields = ['gender','weight','height','age','activity']
 
+class User_progress_form(forms.ModelForm):
+    class Meta:
+        model = User_progress
+        fields = ['weight','bust','waist','hips']
 
 class CalorieCalcForm(forms.Form):
     GENDER_CHOICES = [
