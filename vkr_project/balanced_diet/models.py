@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone
 from django.contrib.auth.models import User
 
 
@@ -34,3 +35,13 @@ class User_param(models.Model):
         fats = kcal_value * 0.3 / 9
         carbs = kcal_value * 0.4 / 4
         return kcal_value, proteins, fats, carbs
+
+
+class User_progress(models.Model):
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    weight = models.IntegerField()
+    bust = models.IntegerField()
+    waist = models.IntegerField()
+    hips = models.IntegerField()
+    date = models.DateField(default=timezone.now)
+
