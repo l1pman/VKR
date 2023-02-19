@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from .forms import User_param_form, CalorieCalcForm, User_progress_form
+from .forms import User_param_form, CalorieCalcForm, User_progress_form, User_prefs_form
 from .models import User_param, User_progress, User_prefs
 # Create your views here.
 def index(request):
@@ -121,3 +121,19 @@ def progress_charts(request):
     }
 
     return render(request, 'balanced_diet/progress_charts.html', context)
+
+
+@login_required
+def input_prefs(request):
+    user = User_prefs.objects.get(owner=request.user)
+    if request.method != 'POST':
+        form = User_prefs_form(instance=user)
+    else:
+        form = User_prefs_form(instance=user, data=request.POST)
+        if form.is_valid():
+            input_prefs = form.save(commit=False)
+            input_prefs.owner = request.user
+            input_prefs.save()
+            return redirect('balanced_diet:my_diet')
+    context = {'user': user, 'form': form}
+    return render(request, 'balanced_diet/input_prefs.html', context)

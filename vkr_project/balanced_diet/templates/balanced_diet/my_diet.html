@@ -10,7 +10,7 @@
     <p>{{ fats }}</p>
     <p>{{ carbs }}</p>
     <a class="btn btn-dark"  role="button" href="{% url 'balanced_diet:edit_kcal' %}">Изменить параметры</a>
-    <a class="btn btn-dark"  type="button" href="">Составить меню</a>
+    <a class="btn btn-dark"  type="button" href="{% url 'balanced_diet:input_prefs' %}">Составить меню</a>
     <a class="btn btn-dark"  type="button" href="{% url 'balanced_diet:progress_charts' %}">Мой прогресс</a>
     {% endif %}
 </div>

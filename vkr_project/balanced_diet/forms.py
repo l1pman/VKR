@@ -1,5 +1,5 @@
 from django import forms
-from .models import User_param, User_progress
+from .models import User_param, User_progress, User_prefs
 from django.contrib.auth.models import User
 
 
@@ -32,3 +32,8 @@ class CalorieCalcForm(forms.Form):
     age = forms.IntegerField()
     activity = forms.ChoiceField(choices=ACTIVITY_CHOICES)
 
+
+class User_prefs_form(forms.ModelForm):
+    class Meta:
+        model = User_prefs
+        fields = ['lactose', 'vegan', 'halal']
