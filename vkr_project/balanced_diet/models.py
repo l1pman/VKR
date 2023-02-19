@@ -55,3 +55,30 @@ class User_prefs(models.Model):
     proteins = models.DecimalField(max_digits=6, decimal_places=2)
     fats = models.DecimalField(max_digits=6, decimal_places=2)
     carbs = models.DecimalField(max_digits=6, decimal_places=2)
+
+class Product(models.Model):
+    name = models.CharField(max_length=50)
+    lactose = models.BooleanField(default=False)
+    vegan = models.BooleanField(default=False)
+    halal = models.BooleanField(default=False)
+
+
+class User_exclusion_products(models.Model):
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+
+
+class Dish(models.Model):
+    kcal = models.DecimalField(max_digits=6, decimal_places=2)
+    proteins = models.DecimalField(max_digits=6, decimal_places=2)
+    fats = models.DecimalField(max_digits=6, decimal_places=2)
+    carbs = models.DecimalField(max_digits=6, decimal_places=2)
+    breakfast = models.BooleanField(default=False)
+    lunch = models.BooleanField(default=False)
+    dinner = models.BooleanField(default=False)
+
+
+class Recipe(models.Model):
+    dish = models.ForeignKey(Dish, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+
