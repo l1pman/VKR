@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .forms import User_param_form, CalorieCalcForm, User_progress_form
-from .models import User_param, User_progress
+from .models import User_param, User_progress, User_prefs
 # Create your views here.
 def index(request):
     return render(request, 'balanced_diet/index.html')
@@ -87,6 +87,16 @@ def my_diet(request):
             'fats': kcal[2],
             'carbs': kcal[3],
         }
+        User_prefs.objects.update_or_create(
+            owner=request.user,
+            defaults={
+                'owner':request.user,
+                'kcal': kcal[0],
+                'proteins': kcal[1],
+                'fats': kcal[2],
+                'carbs': kcal[3],
+            }
+        )
         return render(request, 'balanced_diet/my_diet.html', context)
     except User_param.DoesNotExist:
         return render(request, 'balanced_diet/my_diet.html')

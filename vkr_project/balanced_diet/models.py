@@ -45,3 +45,13 @@ class User_progress(models.Model):
     hips = models.IntegerField()
     date = models.DateTimeField(default=timezone.now)
 
+
+class User_prefs(models.Model):
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    lactose = models.BooleanField(default=False)
+    vegan = models.BooleanField(default=False)
+    halal = models.BooleanField(default=False)
+    kcal = models.DecimalField(max_digits=6, decimal_places=2)
+    proteins = models.DecimalField(max_digits=6, decimal_places=2)
+    fats = models.DecimalField(max_digits=6, decimal_places=2)
+    carbs = models.DecimalField(max_digits=6, decimal_places=2)
