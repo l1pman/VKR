@@ -1,6 +1,36 @@
 {% extends "balanced_diet/base.html" %}
+
 {% load crispy_forms_tags %}
 {% block content %}
+    {% if not not values %}
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Date', 'Вес', 'Обхват груди', 'Обхват талии', 'Обхват бедер'],
+            {% for i in values %}
+                ['{{ i.date }}', {{ i.weight }}, {{ i.bust }}, {{ i.waist }}, {{ i.hips }}],
+            {% endfor %}
+        ]);
+
+        var options = {
+          title: 'Мой прогресс',
+          hAxis: {title: '',  titleTextStyle: {color: '#333'}},
+          vAxis: {minValue: 0}
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
+      }
+    </script>
+
+
+     <div id="chart_div" style="width: 100%; height: 500px;"></div>
+    {% endif %}
+
 <div style="max-width: 300px">
 <form method="post" action="{% url 'balanced_diet:progress_charts' %}">
     {% csrf_token %}

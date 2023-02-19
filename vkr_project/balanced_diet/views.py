@@ -104,5 +104,10 @@ def progress_charts(request):
             progress_charts.save()
             return redirect('balanced_diet:progress_charts')
 
-    context = {'form': form}
+    values = User_progress.objects.filter(owner=request.user)
+    context = {
+        'form': form,
+        'values': values
+    }
+
     return render(request, 'balanced_diet/progress_charts.html', context)

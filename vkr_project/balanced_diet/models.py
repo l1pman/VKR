@@ -43,5 +43,5 @@ class User_progress(models.Model):
     bust = models.IntegerField()
     waist = models.IntegerField()
     hips = models.IntegerField()
-    date = models.DateField(default=timezone.now)
+    date = models.DateTimeField(default=timezone.now)
 
