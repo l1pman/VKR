@@ -69,6 +69,7 @@ class User_exclusion_products(models.Model):
 
 
 class Dish(models.Model):
+    name = models.CharField(max_length=50)
     kcal = models.DecimalField(max_digits=6, decimal_places=2)
     proteins = models.DecimalField(max_digits=6, decimal_places=2)
     fats = models.DecimalField(max_digits=6, decimal_places=2)
@@ -76,7 +77,6 @@ class Dish(models.Model):
     breakfast = models.BooleanField(default=False)
     lunch = models.BooleanField(default=False)
     dinner = models.BooleanField(default=False)
-
 
 class Recipe(models.Model):
     dish = models.ForeignKey(Dish, on_delete=models.CASCADE)
