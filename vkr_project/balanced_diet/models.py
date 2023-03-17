@@ -77,6 +77,7 @@ class Dish(models.Model):
     breakfast = models.BooleanField(default=False)
     lunch = models.BooleanField(default=False)
     dinner = models.BooleanField(default=False)
+    recipetext = models.TextField(default='')
 
 class Recipe(models.Model):
     dish = models.ForeignKey(Dish, on_delete=models.CASCADE)
