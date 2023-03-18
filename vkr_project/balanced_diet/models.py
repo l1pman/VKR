@@ -79,7 +79,9 @@ class Dish(models.Model):
     dinner = models.BooleanField(default=False)
     recipetext = models.TextField(default='')
 
+
 class Recipe(models.Model):
     dish = models.ForeignKey(Dish, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    amountofprod = models.CharField(max_length=50, default='')
 
