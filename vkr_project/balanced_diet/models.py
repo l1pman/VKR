@@ -57,7 +57,7 @@ class User_prefs(models.Model):
     carbs = models.DecimalField(max_digits=6, decimal_places=2)
 
 class Product(models.Model):
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=50, unique=True)
     lactose = models.BooleanField(default=False)
     vegan = models.BooleanField(default=False)
     halal = models.BooleanField(default=False)
@@ -69,7 +69,7 @@ class User_exclusion_products(models.Model):
 
 
 class Dish(models.Model):
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=50, unique=True)
     kcal = models.DecimalField(max_digits=6, decimal_places=2)
     proteins = models.DecimalField(max_digits=6, decimal_places=2)
     fats = models.DecimalField(max_digits=6, decimal_places=2)
