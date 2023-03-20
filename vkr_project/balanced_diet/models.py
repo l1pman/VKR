@@ -85,3 +85,25 @@ class Recipe(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     amountofprod = models.CharField(max_length=50, default='')
 
+
+class User_nutrition(models.Model):
+    WEEKDAY_CHOICES = [
+        ('MON', 'Monday'),
+        ('TUE', 'Tuesday'),
+        ('WED', 'Wednesday'),
+        ('THU', 'Thursday'),
+        ('FRI', 'Friday'),
+        ('SAT', 'Saturday'),
+        ('SUN', 'Sunday')
+    ]
+    MEAL_CHOICES = [
+        ('BF', 'Breakfast'),
+        ('LN', 'Lunch'),
+        ('DN', 'Dinner')
+    ]
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    weekday = models.CharField(max_length=10, choices=WEEKDAY_CHOICES, default='')
+    meal = models.CharField(max_length=10, choices=MEAL_CHOICES, default='')
+    dish = models.ForeignKey(Dish, on_delete=models.CASCADE)
+    amountofdish = models.DecimalField(max_digits=6, decimal_places=2)
+
