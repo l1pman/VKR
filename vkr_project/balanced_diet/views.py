@@ -143,18 +143,25 @@ def input_prefs(request):
 def create_user_nutrition(request):
     try:
         user_prefs = User_prefs.get_user_prefs(User_prefs.objects.get(owner=request.user))
-        products = Product.objects.all()
-        if user_prefs[1] == True:
-            products = Product.objects.filter(lactose=0)
-        if user_prefs[2] == True:
-            products = products.filter(vegan=0)
-        if user_prefs[3] == True:
-            products = products.filter(halal=0)
+        # products = Product.objects.all()
+        # if user_prefs[1] == True:
+        #     products = Product.objects.filter(lactose=0)
+        # if user_prefs[2] == True:
+        #     products = products.filter(vegan=0)
+        # if user_prefs[3] == True:
+        #     products = products.filter(halal=0)
 
-        for i in products:
+        dishes = Dish.objects.all()
+        if user_prefs[1] == True:
+            dishes = Dish.objects.exclude(recipe__product__lactose=1)
+        if user_prefs[2] == True:
+            dishes = dishes.exclude(recipe__product__vegan=1)
+        if user_prefs[3] == True:
+            dishes = dishes.exclude(recipe__product__halal=1)
+
+        for i in set(dishes):
             print(i.name)
         print(user_prefs)
-
         return render(request, 'balanced_diet/my_nutrition.html')
     except User_prefs.DoesNotExist:
         return render(request, 'balanced_diet/my_diet.html')
