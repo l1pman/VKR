@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .forms import User_param_form, CalorieCalcForm, User_progress_form, User_prefs_form
-from .models import User_param, User_progress, User_prefs
+from .models import *
+from django.db.models import Q
 # Create your views here.
 def index(request):
     return render(request, 'balanced_diet/index.html')
@@ -134,6 +135,26 @@ def input_prefs(request):
             input_prefs = form.save(commit=False)
             input_prefs.owner = request.user
             input_prefs.save()
-            return redirect('balanced_diet:my_diet')
+            return redirect('balanced_diet:my_nutrition')
     context = {'user': user, 'form': form}
     return render(request, 'balanced_diet/input_prefs.html', context)
+# GET /my_nutrition/ HTTP/1.1" 200 2315
+@login_required
+def create_user_nutrition(request):
+    try:
+        user_prefs = User_prefs.get_user_prefs(User_prefs.objects.get(owner=request.user))
+        products = Product.objects.all()
+        if user_prefs[1] == True:
+            products = Product.objects.filter(lactose=0)
+        if user_prefs[2] == True:
+            products = products.filter(vegan=0)
+        if user_prefs[3] == True:
+            products = products.filter(halal=0)
+
+        for i in products:
+            print(i.name)
+        print(user_prefs)
+
+        return render(request, 'balanced_diet/my_nutrition.html')
+    except User_prefs.DoesNotExist:
+        return render(request, 'balanced_diet/my_diet.html')

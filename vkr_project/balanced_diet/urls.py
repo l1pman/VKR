@@ -9,5 +9,6 @@ urlpatterns = [
     path('edit_kcal/', views.edit_kcal, name='edit_kcal'),
     path('try_service/', views.try_service, name='try_service'),
     path('progress_charts/', views.progress_charts, name='progress_charts'),
-    path('input_prefs/', views.input_prefs, name='input_prefs')
+    path('input_prefs/', views.input_prefs, name='input_prefs'),
+    path('my_nutrition/', views.create_user_nutrition, name='my_nutrition')
 ]

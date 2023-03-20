@@ -56,6 +56,13 @@ class User_prefs(models.Model):
     fats = models.DecimalField(max_digits=6, decimal_places=2)
     carbs = models.DecimalField(max_digits=6, decimal_places=2)
 
+    def get_user_prefs(self):
+        lactose = self.lactose
+        vegan = self.vegan
+        halal = self.halal
+        kcalformeal = int(self.kcal/3)
+        return kcalformeal, lactose, vegan, halal
+
 class Product(models.Model):
     name = models.CharField(max_length=50, unique=True)
     lactose = models.BooleanField(default=False) # not lactose
