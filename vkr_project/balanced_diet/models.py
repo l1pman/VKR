@@ -58,9 +58,9 @@ class User_prefs(models.Model):
 
 class Product(models.Model):
     name = models.CharField(max_length=50, unique=True)
-    lactose = models.BooleanField(default=False)
-    vegan = models.BooleanField(default=False)
-    halal = models.BooleanField(default=False)
+    lactose = models.BooleanField(default=False) # not lactose
+    vegan = models.BooleanField(default=False) # not vegan
+    halal = models.BooleanField(default=False) # not halal
 
 
 class User_exclusion_products(models.Model):
