@@ -1,3 +1,7 @@
 {% extends "balanced_diet/base.html" %}
 {% block content %}
+    <form method="post" action="{% url 'balanced_diet:create_user_nutrition' %}">
+    {% csrf_token %}
+    <button name="submit" class="btn btn-success mt-2">Сохранить</button>
+    </form>
 {% endblock content %}

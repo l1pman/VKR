@@ -143,41 +143,47 @@ def input_prefs(request):
 # GET /my_nutrition/ HTTP/1.1" 200 2315
 @login_required
 def create_user_nutrition(request):
+    if request.method == 'POST':
+        try:
+            user_prefs = User_prefs.get_user_prefs(User_prefs.objects.get(owner=request.user))
+
+            dishes = Dish.objects.filter(kcal__gt=100)
+            if user_prefs[1] == True:
+                dishes = dishes.exclude(recipe__product__lactose=1)
+            if user_prefs[2] == True:
+                dishes = dishes.exclude(recipe__product__vegan=1)
+            if user_prefs[3] == True:
+                dishes = dishes.exclude(recipe__product__halal=1)
+
+            dishes_for_week = random.choices(dishes, k=21)
+            weekdays = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN']
+            meals = ['BF','LN','DN']
+            for i in dishes_for_week:
+                print(i.name, ' ', i.kcal)
+            for weekday in weekdays:
+                for meal in meals:
+                        d = dishes_for_week.pop(list(dishes_for_week).index(random.choice(dishes_for_week)))
+                        User_nutrition.objects.update_or_create(
+                        owner= request.user,
+                        weekday= weekday,
+                        meal = meal,
+                        defaults={
+                            'owner': request.user,
+                            'weekday': weekday,
+                            'meal': meal,
+                            'dish': d,
+                            'amountofdish': user_prefs[0]/d.kcal*100
+                        }
+                    )
+
+            return render(request, 'balanced_diet/my_nutrition.html')
+        except User_prefs.DoesNotExist:
+            return render(request, 'balanced_diet/my_diet.html')
+
+@login_required
+def my_nutrition(request):
     try:
-        user_prefs = User_prefs.get_user_prefs(User_prefs.objects.get(owner=request.user))
-
-        dishes = Dish.objects.all()
-        if user_prefs[1] == True:
-            dishes = Dish.objects.exclude(recipe__product__lactose=1)
-        if user_prefs[2] == True:
-            dishes = dishes.exclude(recipe__product__vegan=1)
-        if user_prefs[3] == True:
-            dishes = dishes.exclude(recipe__product__halal=1)
-
-        dishes_for_week = random.choices(dishes, k=21)
-        weekdays = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN']
-        meals = ['BF','LN','DN']
-
-        for weekday in weekdays:
-            for meal in meals:
-                    d = dishes_for_week.pop(list(dishes_for_week).index(random.choice(dishes_for_week)))
-                    User_nutrition.objects.update_or_create(
-                    owner= request.user,
-                    weekday= weekday,
-                    meal = meal,
-                    defaults={
-                        'owner': request.user,
-                        'weekday': weekday,
-                        'meal': meal,
-                        'dish': d,
-                        'amountofdish': user_prefs[0]/d.kcal*100
-                    }
-                )
-
-
-
-
-        print(user_prefs)
-        return render(request, 'balanced_diet/my_nutrition.html')
-    except User_prefs.DoesNotExist:
+        user_nutrition = User_nutrition.objects.filter(owner=request.user)
+        return render(request,'balanced_diet/my_nutrition.html')
+    except User_nutrition.DoesNotExist:
         return render(request, 'balanced_diet/my_diet.html')
