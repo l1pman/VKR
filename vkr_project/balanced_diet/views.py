@@ -183,9 +183,10 @@ def create_user_nutrition(request):
 @login_required
 def my_nutrition(request):
     try:
-        user_nutrition = User_nutrition.objects.filter(owner=request.user)
-        monbf = user_nutrition.filter(weekday='MON', meal = 'BF').values('dish')
-        print(Dish.objects.filter(id=monbf[0].get('dish')).values())
-        return render(request,'balanced_diet/my_nutrition.html')
+        monbf = User_nutrition.objects.filter(owner=request.user)
+        context = {
+            'monbf': monbf
+        }
+        return render(request,'balanced_diet/my_nutrition.html', context)
     except User_nutrition.DoesNotExist:
         return render(request, 'balanced_diet/my_diet.html')

@@ -11,177 +11,41 @@
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <td class="align-middle">Понедельник</td>
-      <td class="align-middle">Завтрак</td>
-      <td class="align-middle"><a style="color: inherit" href="{% url 'balanced_diet:my_diet' %}">Блюдо</a></td>
-      <td class="align-middle">Количество</td>
-      <td><button class="btn btn-success">Изменить</button> </td>
-    </tr>
 
-    <tr>
-      <td class="align-middle">Понедельник</td>
-      <td class="align-middle">Обед</td>
-      <td class="align-middle"><a style="color: inherit" href="{% url 'balanced_diet:my_diet' %}">Блюдо</a></td>
-      <td class="align-middle">Количество</td>
-      <td><button class="btn btn-success">Изменить</button> </td>
-    </tr>
+    {% for i in monbf %}
+        <tr>
 
-    <tr>
-      <td class="align-middle">Понедельник</td>
-      <td class="align-middle">Ужин</td>
-      <td class="align-middle"><a style="color: inherit" href="{% url 'balanced_diet:my_diet' %}">Блюдо</a></td>
-      <td class="align-middle">Количество</td>
-      <td><button class="btn btn-success">Изменить</button> </td>
-    </tr>
+        {% if i.weekday == 'MON' %}
+            <td class="align-middle">Понедельник</td>
+        {% elif i.weekday == 'TUE' %}
+            <td class="align-middle">Вторник</td>
+        {% elif i.weekday == 'WED' %}
+            <td class="align-middle">Среда</td>
+        {% elif i.weekday == 'THU' %}
+            <td class="align-middle">Четверг</td>
+        {% elif i.weekday == 'FRI' %}
+            <td class="align-middle">Пятница</td>
+        {% elif i.weekday == 'SAT' %}
+            <td class="align-middle">Суббота</td>
+        {% elif i.weekday == 'SUN' %}
+            <td class="align-middle">Воскресенье</td>
+        {% endif %}
 
-    <tr>
-      <td class="align-middle">Вторник</td>
-      <td class="align-middle">Завтрак</td>
-      <td class="align-middle"><a style="color: inherit" href="{% url 'balanced_diet:my_diet' %}">Блюдо</a></td>
-      <td class="align-middle">Количество</td>
-      <td><button class="btn btn-success">Изменить</button> </td>
-    </tr>
+        {% if i.meal == 'BF' %}
+             <td class="align-middle">Завтрак</td>
+        {% elif i.meal == 'LN' %}
+             <td class="align-middle">Обед</td>
+        {% elif i.meal == 'DN' %}
+             <td class="align-middle">Ужин</td>
+        {% endif %}
 
-    <tr>
-      <td class="align-middle">Вторник</td>
-      <td class="align-middle">Обед</td>
-      <td class="align-middle"><a style="color: inherit" href="{% url 'balanced_diet:my_diet' %}">Блюдо</a></td>
-      <td class="align-middle">Количество</td>
-      <td><button class="btn btn-success">Изменить</button> </td>
-    </tr>
+        <td class="align-middle"><a style="color: inherit" href="{% url 'balanced_diet:my_diet' %}"> {{ i.dish.name }} </a></td>
+        <td class="align-middle">{{ i.amountofdish }}</td>
 
-    <tr>
-      <td class="align-middle">Вторник</td>
-      <td class="align-middle">Ужин</td>
-      <td class="align-middle"><a style="color: inherit" href="{% url 'balanced_diet:my_diet' %}">Блюдо</a></td>
-      <td class="align-middle">Количество</td>
-      <td><button class="btn btn-success">Изменить</button> </td>
-    </tr>
+        <td><button class="btn btn-success">Изменить</button> </td>
 
-    <tr>
-      <td class="align-middle">Среда</td>
-      <td class="align-middle">Завтрак</td>
-      <td class="align-middle"><a style="color: inherit" href="{% url 'balanced_diet:my_diet' %}">Блюдо</a></td>
-      <td class="align-middle">Количество</td>
-      <td><button class="btn btn-success">Изменить</button> </td>
-    </tr>
-
-    <tr>
-      <td class="align-middle">Среда</td>
-      <td class="align-middle">Обед</td>
-      <td class="align-middle"><a style="color: inherit" href="{% url 'balanced_diet:my_diet' %}">Блюдо</a></td>
-      <td class="align-middle">Количество</td>
-      <td><button class="btn btn-success">Изменить</button> </td>
-    </tr>
-
-    <tr>
-      <td class="align-middle">Среда</td>
-      <td class="align-middle">Ужин</td>
-      <td class="align-middle"><a style="color: inherit" href="{% url 'balanced_diet:my_diet' %}">Блюдо</a></td>
-      <td class="align-middle">Количество</td>
-      <td><button class="btn btn-success">Изменить</button> </td>
-    </tr>
-
-    <tr>
-      <td class="align-middle">Четверг</td>
-      <td class="align-middle">Завтрак</td>
-      <td class="align-middle"><a style="color: inherit" href="{% url 'balanced_diet:my_diet' %}">Блюдо</a></td>
-      <td class="align-middle">Количество</td>
-      <td><button class="btn btn-success">Изменить</button> </td>
-    </tr>
-
-    <tr>
-      <td class="align-middle">Четверг</td>
-      <td class="align-middle">Обед</td>
-      <td class="align-middle"><a style="color: inherit" href="{% url 'balanced_diet:my_diet' %}">Блюдо</a></td>
-      <td class="align-middle">Количество</td>
-      <td><button class="btn btn-success">Изменить</button> </td>
-    </tr>
-
-    <tr>
-      <td class="align-middle">Четверг</td>
-      <td class="align-middle">Ужин</td>
-      <td class="align-middle"><a style="color: inherit" href="{% url 'balanced_diet:my_diet' %}">Блюдо</a></td>
-      <td class="align-middle">Количество</td>
-      <td><button class="btn btn-success">Изменить</button> </td>
-    </tr>
-
-    <tr>
-      <td class="align-middle">Пятница</td>
-      <td class="align-middle">Завтрак</td>
-      <td class="align-middle"><a style="color: inherit" href="{% url 'balanced_diet:my_diet' %}">Блюдо</a></td>
-      <td class="align-middle">Количество</td>
-      <td><button class="btn btn-success">Изменить</button> </td>
-    </tr>
-
-    <tr>
-      <td class="align-middle">Пятница</td>
-      <td class="align-middle">Обед</td>
-      <td class="align-middle"><a style="color: inherit" href="{% url 'balanced_diet:my_diet' %}">Блюдо</a></td>
-      <td class="align-middle">Количество</td>
-      <td><button class="btn btn-success">Изменить</button> </td>
-    </tr>
-
-    <tr>
-      <td class="align-middle">Пятница</td>
-      <td class="align-middle">Ужин</td>
-      <td class="align-middle"><a style="color: inherit" href="{% url 'balanced_diet:my_diet' %}">Блюдо</a></td>
-      <td class="align-middle">Количество</td>
-      <td><button class="btn btn-success">Изменить</button> </td>
-    </tr>
-
-    <tr>
-      <td class="align-middle">Суббота</td>
-      <td class="align-middle">Завтрак</td>
-      <td class="align-middle"><a style="color: inherit" href="{% url 'balanced_diet:my_diet' %}">Блюдо</a></td>
-      <td class="align-middle">Количество</td>
-      <td><button class="btn btn-success">Изменить</button> </td>
-    </tr>
-
-    <tr>
-      <td class="align-middle">Суббота</td>
-      <td class="align-middle">Обед</td>
-      <td class="align-middle"><a style="color: inherit" href="{% url 'balanced_diet:my_diet' %}">Блюдо</a></td>
-      <td class="align-middle">Количество</td>
-      <td><button class="btn btn-success">Изменить</button> </td>
-    </tr>
-
-    <tr>
-      <td class="align-middle">Суббота</td>
-      <td class="align-middle">Ужин</td>
-      <td class="align-middle"><a style="color: inherit" href="{% url 'balanced_diet:my_diet' %}">Блюдо</a></td>
-      <td class="align-middle">Количество</td>
-      <td><button class="btn btn-success">Изменить</button> </td>
-    </tr>
-
-    <tr>
-      <td class="align-middle">Воскресенье</td>
-      <td class="align-middle">Завтрак</td>
-      <td class="align-middle"><a style="color: inherit" href="{% url 'balanced_diet:my_diet' %}">Блюдо</a></td>
-      <td class="align-middle">Количество</td>
-      <td><button class="btn btn-success">Изменить</button> </td>
-    </tr>
-
-    <tr>
-      <td class="align-middle">Воскресенье</td>
-      <td class="align-middle">Обед</td>
-      <td class="align-middle"><a style="color: inherit" href="{% url 'balanced_diet:my_diet' %}">Блюдо</a></td>
-      <td class="align-middle">Количество</td>
-      <td><button class="btn btn-success">Изменить</button> </td>
-    </tr>
-
-    <tr>
-      <td class="align-middle">Воскресенье</td>
-      <td class="align-middle">Ужин</td>
-      <td class="align-middle"><a style="color: inherit" href="{% url 'balanced_diet:my_diet' %}">Блюдо</a></td>
-      <td class="align-middle">Количество</td>
-      <td><button class="btn btn-success">Изменить</button> </td>
-    </tr>
-
-
-
-
+        </tr>
+    {% endfor %}
 
 
   </tbody>
