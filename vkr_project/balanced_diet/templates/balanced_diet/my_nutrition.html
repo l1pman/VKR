@@ -1,5 +1,6 @@
 {% extends "balanced_diet/base.html" %}
 {% block content %}
+    <div style="clear: both">
     <table class="table">
   <thead>
     <tr>
@@ -39,7 +40,7 @@
              <td class="align-middle">Ужин</td>
         {% endif %}
 
-        <td class="align-middle"><a style="color: inherit" href="{% url 'balanced_diet:my_diet' %}"> {{ i.dish.name }} </a></td>
+        <td class="align-middle"><a style="color: inherit" href="{% url 'balanced_diet:dish' i.dish.id %}"> {{ i.dish.name }} </a></td>
         <td class="align-middle">{{ i.amountofdish }}</td>
 
         <td><button class="btn btn-success">Изменить</button> </td>
@@ -55,5 +56,5 @@
     {% csrf_token %}
     <button name="submit" class="btn btn-success mt-2">Собрать меню</button>
     </form>
-
+    </div>
 {% endblock content %}

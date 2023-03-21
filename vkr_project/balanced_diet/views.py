@@ -176,7 +176,7 @@ def create_user_nutrition(request):
                         }
                     )
 
-            return render(request, 'balanced_diet/my_nutrition.html')
+            return redirect('balanced_diet:my_nutrition')
         except User_prefs.DoesNotExist:
             return render(request, 'balanced_diet/my_diet.html')
 
@@ -190,3 +190,17 @@ def my_nutrition(request):
         return render(request,'balanced_diet/my_nutrition.html', context)
     except User_nutrition.DoesNotExist:
         return render(request, 'balanced_diet/my_diet.html')
+
+@login_required
+def dish(request, dish_id):
+    try:
+        dish = Dish.objects.get(id=dish_id)
+        recipe = Recipe.objects.filter(dish_id=dish_id)
+
+        context = {
+            'dish' : dish,
+            'recipe': recipe
+        }
+        return render(request, 'balanced_diet/dish.html', context)
+    except Dish.DoesNotExist:
+        return render(request, 'balanced_diet/my_nutrition.html')
