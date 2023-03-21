@@ -1,8 +1,10 @@
+import random
+
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .forms import User_param_form, CalorieCalcForm, User_progress_form, User_prefs_form
 from .models import *
-from django.db.models import Q
+
 # Create your views here.
 def index(request):
     return render(request, 'balanced_diet/index.html')
@@ -143,13 +145,6 @@ def input_prefs(request):
 def create_user_nutrition(request):
     try:
         user_prefs = User_prefs.get_user_prefs(User_prefs.objects.get(owner=request.user))
-        # products = Product.objects.all()
-        # if user_prefs[1] == True:
-        #     products = Product.objects.filter(lactose=0)
-        # if user_prefs[2] == True:
-        #     products = products.filter(vegan=0)
-        # if user_prefs[3] == True:
-        #     products = products.filter(halal=0)
 
         dishes = Dish.objects.all()
         if user_prefs[1] == True:
@@ -159,8 +154,29 @@ def create_user_nutrition(request):
         if user_prefs[3] == True:
             dishes = dishes.exclude(recipe__product__halal=1)
 
-        for i in set(dishes):
-            print(i.name)
+        dishes_for_week = random.choices(dishes, k=21)
+        weekdays = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN']
+        meals = ['BF','LN','DN']
+
+        for weekday in weekdays:
+            for meal in meals:
+                    d = dishes_for_week.pop(list(dishes_for_week).index(random.choice(dishes_for_week)))
+                    User_nutrition.objects.update_or_create(
+                    owner= request.user,
+                    weekday= weekday,
+                    meal = meal,
+                    defaults={
+                        'owner': request.user,
+                        'weekday': weekday,
+                        'meal': meal,
+                        'dish': d,
+                        'amountofdish': user_prefs[0]/d.kcal*100
+                    }
+                )
+
+
+
+
         print(user_prefs)
         return render(request, 'balanced_diet/my_nutrition.html')
     except User_prefs.DoesNotExist:
