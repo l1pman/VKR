@@ -146,8 +146,7 @@ def create_user_nutrition(request):
     if request.method == 'POST':
         try:
             user_prefs = User_prefs.get_user_prefs(User_prefs.objects.get(owner=request.user))
-
-            dishes = Dish.objects.filter(kcal__gt=100)
+            dishes = Dish.objects.all()
             if user_prefs[1] == True:
                 dishes = dishes.exclude(recipe__product__lactose=1)
             if user_prefs[2] == True:
@@ -155,25 +154,39 @@ def create_user_nutrition(request):
             if user_prefs[3] == True:
                 dishes = dishes.exclude(recipe__product__halal=1)
 
-            dishes_for_week = random.choices(dishes, k=21)
+            dbf = dishes.filter(breakfast=True, kcal__lt=120)
+            dln = dishes.filter(lunch=True, kcal__gt=200)
+            ddn = dishes.filter(dinner=True, kcal__gt=180)
+
             weekdays = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN']
-            meals = ['BF','LN','DN']
-            for i in dishes_for_week:
-                print(i.name, ' ', i.kcal)
+            meals = ['BF','BR','LN','DN']
+
             for weekday in weekdays:
                 for meal in meals:
-                        d = dishes_for_week.pop(list(dishes_for_week).index(random.choice(dishes_for_week)))
-                        User_nutrition.objects.update_or_create(
-                        owner= request.user,
-                        weekday= weekday,
-                        meal = meal,
-                        defaults={
-                            'owner': request.user,
-                            'weekday': weekday,
-                            'meal': meal,
-                            'dish': d,
-                            'amountofdish': user_prefs[0]/d.kcal*100
-                        }
+                    if meal == 'BF':
+                        d = random.choice(dbf)
+                        amountofdish = user_prefs[0]*30/d.kcal
+                    if meal == 'BR':
+                        d = random.choice(dbf)
+                        amountofdish = user_prefs[0]*10/d.kcal
+                    elif meal == 'LN':
+                        d = random.choice(dln)
+                        amountofdish = user_prefs[0] * 35 / d.kcal
+                    elif meal == 'DN':
+                        d = random.choice(ddn)
+                        amountofdish = user_prefs[0] * 25 / d.kcal
+
+                    User_nutrition.objects.update_or_create(
+                    owner= request.user,
+                    weekday= weekday,
+                    meal = meal,
+                    defaults={
+                        'owner': request.user,
+                        'weekday': weekday,
+                        'meal': meal,
+                        'dish': d,
+                        'amountofdish': amountofdish
+                    }
                     )
 
             return redirect('balanced_diet:my_nutrition')
@@ -204,3 +217,57 @@ def dish(request, dish_id):
         return render(request, 'balanced_diet/dish.html', context)
     except Dish.DoesNotExist:
         return render(request, 'balanced_diet/my_nutrition.html')
+
+
+@login_required
+def change_one_dish(request):
+    if request.method == 'POST':
+        weekday = request.POST.get("weekday")
+        meal = request.POST.get("meal")
+        print(weekday)
+        print(meal)
+        try:
+            user_prefs = User_prefs.get_user_prefs(User_prefs.objects.get(owner=request.user))
+            dishes = Dish.objects.all()
+            if user_prefs[1] == True:
+                dishes = dishes.exclude(recipe__product__lactose=1)
+            if user_prefs[2] == True:
+                dishes = dishes.exclude(recipe__product__vegan=1)
+            if user_prefs[3] == True:
+                dishes = dishes.exclude(recipe__product__halal=1)
+
+            dbf = dishes.filter(breakfast=True, kcal__lt=120)
+            dln = dishes.filter(lunch=True, kcal__gt=200)
+            ddn = dishes.filter(dinner=True, kcal__gt=180)
+
+            if meal == 'BF':
+                d = random.choice(dbf)
+                amountofdish = user_prefs[0] * 30 / d.kcal
+            if meal == 'BR':
+                d = random.choice(dbf)
+                amountofdish = user_prefs[0] * 10 / d.kcal
+            elif meal == 'LN':
+                d = random.choice(dln)
+                amountofdish = user_prefs[0] * 35 / d.kcal
+            elif meal == 'DN':
+                d = random.choice(ddn)
+                amountofdish = user_prefs[0] * 25 / d.kcal
+
+            User_nutrition.objects.update_or_create(
+                owner=request.user,
+                weekday=weekday,
+                meal=meal,
+                defaults={
+                    'owner': request.user,
+                    'weekday': weekday,
+                    'meal': meal,
+                    'dish': d,
+                    'amountofdish': amountofdish
+                }
+            )
+
+
+
+            return redirect('balanced_diet:my_nutrition')
+        except User_prefs.DoesNotExist:
+            return render(request, 'balanced_diet/my_diet.html')

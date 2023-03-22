@@ -12,5 +12,6 @@ urlpatterns = [
     path('input_prefs/', views.input_prefs, name='input_prefs'),
     path('create_user_nutrition', views.create_user_nutrition, name='create_user_nutrition'),
     path('my_nutrition/', views.my_nutrition, name='my_nutrition'),
-    path('dishes/<int:dish_id>', views.dish, name='dish')
+    path('dishes/<int:dish_id>', views.dish, name='dish'),
+    path('change_one_dish', views.change_one_dish, name='change_one_dish')
 ]

@@ -60,7 +60,7 @@ class User_prefs(models.Model):
         lactose = self.lactose
         vegan = self.vegan
         halal = self.halal
-        kcalformeal = int(self.kcal/3)
+        kcalformeal = self.kcal
         return kcalformeal, lactose, vegan, halal
 
 class Product(models.Model):
@@ -105,6 +105,7 @@ class User_nutrition(models.Model):
     ]
     MEAL_CHOICES = [
         ('BF', 'Breakfast'),
+        ('BR', 'Brunch'),
         ('LN', 'Lunch'),
         ('DN', 'Dinner')
     ]
