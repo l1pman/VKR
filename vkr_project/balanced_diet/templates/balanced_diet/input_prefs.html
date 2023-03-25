@@ -1,7 +1,7 @@
 {% extends "balanced_diet/base.html" %}
 <title>{% block title %}Предпочтения{% endblock title %}</title>
 {% load crispy_forms_tags %}
-{% block content %}
+{% block text %}
 <div class="container" style="max-width: 300px">
 <form method="post" action="{% url 'balanced_diet:input_prefs' %}">
     {% csrf_token %}
@@ -9,4 +9,4 @@
     <button name="submit" class="btn btn-success mt-2">Продолжить</button>
 </form>
 </div>
-{% endblock content %}
+{% endblock text %}
