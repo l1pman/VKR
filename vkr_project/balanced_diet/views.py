@@ -197,6 +197,19 @@ def create_user_nutrition(request):
 def my_nutrition(request):
     try:
         monbf = User_nutrition.objects.filter(owner=request.user)
+        user_prefs = User_prefs.get_user_prefs(User_prefs.objects.get(owner=request.user))
+        user_nutr = User_nutrition.objects.filter(owner=request.user)
+        for nutr in user_nutr:
+            if nutr.meal == 'BF':
+                amountofdish = user_prefs[0] * 30 / nutr.dish.kcal
+            if nutr.meal == 'BR':
+                amountofdish = user_prefs[0] * 10 / nutr.dish.kcal
+            elif nutr.meal == 'LN':
+                amountofdish = user_prefs[0] * 35 / nutr.dish.kcal
+            elif nutr.meal == 'DN':
+                amountofdish = user_prefs[0] * 25 / nutr.dish.kcal
+            User_nutrition.objects.filter(id=nutr.id).update(amountofdish=amountofdish)
+
         context = {
             'monbf': monbf
         }
@@ -209,7 +222,6 @@ def dish(request, dish_id):
     try:
         dish = Dish.objects.get(id=dish_id)
         recipe = Recipe.objects.filter(dish_id=dish_id)
-
         context = {
             'dish' : dish,
             'recipe': recipe
@@ -224,8 +236,6 @@ def change_one_dish(request):
     if request.method == 'POST':
         weekday = request.POST.get("weekday")
         meal = request.POST.get("meal")
-        print(weekday)
-        print(meal)
         try:
             user_prefs = User_prefs.get_user_prefs(User_prefs.objects.get(owner=request.user))
             dishes = Dish.objects.all()
@@ -271,3 +281,4 @@ def change_one_dish(request):
             return redirect('balanced_diet:my_nutrition')
         except User_prefs.DoesNotExist:
             return render(request, 'balanced_diet/my_diet.html')
+
