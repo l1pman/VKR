@@ -1,19 +1,25 @@
 {% extends "balanced_diet/base.html" %}
 <title>{% block title %}{{ dish.name }}{% endblock title %}</title>
 {% load to_rl %}
-{% block content %}
-    <div style="clear: both; text-align: left">
-    <p> Название блюда: {{ dish.name }} </p>
-    <p> Продукты, которые потребуются: </p>
+{% block text %}
+
+    <p> <b>Название блюда:</b> {{ dish.name }} </p>
+    <p> <b>Продукты, которые потребуются:</b> </p>
     {% for i in recipe %}
         <p> {{ i.product.name }} - {{ i.amountofprod }} </p>
     {% endfor %}
+    <p> <b>Рецепт:</b> </p>
     {% for i in dish.recipetext|to_rl %}
         <p> {{ i }} </p>
     {% endfor %}
-    <p> Калории: {{ dish.kcal }}</p>
-    </div>
+        <p> <b>Пищевая ценность на 100 грамм:</b> </p>
+    <p> Калории: {{ dish.kcal }} ккал.</p>
+    <p> Белки: {{ dish.proteins }} гр.</p>
+    <p> Жиры: {{ dish.fats }} гр.</p>
+    <p> Углеводы: {{ dish.carbs }} гр.</p>
+    <a class="btn btn-success mt-2 mb-3"  type="button" href="{% url 'balanced_diet:my_nutrition' %}">Назад</a>
 
 
 
-{% endblock content %}
+
+{% endblock text %}

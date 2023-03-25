@@ -2,7 +2,7 @@
 {% load crispy_forms_tags %}
 <title>{% block title %}Внести данные{% endblock title %}</title>
 {% block content %}
-<div style="max-width: 300px">
+<div class="container" style="max-width: 300px">
 <form method="post" action="{% url 'balanced_diet:new_kcal' %}">
     {% csrf_token %}
     {{ form|crispy }}

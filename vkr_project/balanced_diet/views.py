@@ -85,10 +85,10 @@ def my_diet(request):
     try:
         kcal = User_param.get_kcal(User_param.objects.get(owner=request.user))
         context = {
-            'kcal': kcal[0],
-            'prot': kcal[1],
-            'fats': kcal[2],
-            'carbs': kcal[3],
+            'kcal': int(kcal[0]),
+            'prot': int(kcal[1]),
+            'fats': int(kcal[2]),
+            'carbs': int(kcal[3]),
         }
         User_prefs.objects.update_or_create(
             owner=request.user,

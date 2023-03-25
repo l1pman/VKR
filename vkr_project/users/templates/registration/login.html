@@ -1,14 +1,14 @@
 {% extends "balanced_diet/base.html" %}
 {% load crispy_forms_tags %}
 <title>{% block title %}Авторизация{% endblock title %}</title>
-{% block content %}
-<div style="max-width: 300px">
+{% block auth %}
+
 <form method="post" action="{% url 'users:login' %}">
     {% csrf_token %}
     {{ form|crispy }}
     <button name="submit" class="btn btn-success mt-2">Log in</button>
-    <input type="hidden" name="next" value="{% url 'balanced_diet:index' %}" />
+    <input type="hidden" name="next" value="{% url 'balanced_diet:my_diet' %}" />
 
 </form>
-</div>
-{% endblock content %}
+
+{% endblock auth %}

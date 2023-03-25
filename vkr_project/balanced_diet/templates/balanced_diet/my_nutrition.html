@@ -1,7 +1,6 @@
 {% extends "balanced_diet/base.html" %}
 <title>{% block title %}Моё меню{% endblock title %}</title>
-{% block content %}
-    <div style="clear: both;  margin-top: 80vh">
+{% block nutrition %}
     <table class="table">
   <thead>
     <tr>
@@ -64,7 +63,7 @@
 
     <form method="post" action="{% url 'balanced_diet:create_user_nutrition' %}">
     {% csrf_token %}
-    <button name="submit" class="btn btn-success mt-2">Собрать меню</button>
+    <button name="submit" class="btn btn-success mt-2 mb-3">Собрать меню</button>
     </form>
-    </div>
-{% endblock content %}
+
+{% endblock nutrition %}

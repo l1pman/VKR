@@ -1,20 +1,22 @@
 {% extends "balanced_diet/base.html" %}
 <title>{% block title %}Моя диета{% endblock title %}</title>
-{% block content %}
+{% block text %}
 
-<div class="d-grid gap-2 col-6 mx-auto"style="max-width: 300px">
+<div class="d-grid gap-2 col-6 mx-auto">
     {% if kcal is None %}
     <a class="btn btn-dark"  role="button" href="{% url 'balanced_diet:new_kcal' %}">Рассчитать КБЖУ</a>
     {% else %}
-    <p>{{ kcal }}</p>
-    <p>{{ prot }}</p>
-    <p>{{ fats }}</p>
-    <p>{{ carbs }}</p>
-    <a class="btn btn-dark"  role="button" href="{% url 'balanced_diet:edit_kcal' %}">Изменить параметры</a>
-    <a class="btn btn-dark"  type="button" href="{% url 'balanced_diet:input_prefs' %}">Составить меню</a>
-    <a class="btn btn-dark"  type="button" href="{% url 'balanced_diet:progress_charts' %}">Мой прогресс</a>
+    <h3>Ваша суточная норма КБЖУ</h3>
+    <p>Калории - {{ kcal }} ккал.</p>
+    <p>Белки - {{ prot }} гр.</p>
+    <p>Жиры - {{ fats }} гр.</p>
+    <p>Углеводы - {{ carbs }} гр.</p>
+    <a class="btn btn-success"  role="button" href="{% url 'balanced_diet:edit_kcal' %}">Изменить параметры</a>
+    <a class="btn btn-success"  type="button" href="{% url 'balanced_diet:input_prefs' %}">Изменить меню</a>
+    <a class="btn btn-success"  type="button" href="{% url 'balanced_diet:progress_charts' %}">Мой прогресс</a>
+    <a class="btn btn-success"  type="button" href="{% url 'balanced_diet:my_nutrition' %}">Мое меню</a>
     {% endif %}
 </div>
 
 
-{% endblock content %}
+{% endblock text %}
