@@ -2,17 +2,23 @@
 {% load crispy_forms_tags %}
 <title>{% block title %}Рассчитать калории{% endblock title %}</title>
 {% block content %}
-
-
+    <div class="container" style="max-width: 300px">
     <form method="post" action="{% url 'balanced_diet:try_service' %}">
         {% csrf_token %}
-        <p>{{ kcal }}</p>
-        <p>{{ prot }}</p>
-        <p>{{ fats }}</p>
-        <p>{{ carbs }}</p>
+        {% if kcal is None %}
         {{form|crispy}}
         <button name="submit" class="btn btn-success mt-2">Рассчитать</button>
-    </form>
 
+        {% else %}
+            <h3>Ваша суточная норма КБЖУ</h3>
+            <p>Калории - {{ kcal }} ккал.</p>
+            <p>Белки - {{ prot }} гр.</p>
+            <p>Жиры - {{ fats }} гр.</p>
+            <p>Углеводы - {{ carbs }} гр.</p>
+            {{form|crispy}}
+            <button name="submit" class="btn btn-success mt-2">Рассчитать</button>
+        {% endif %}
+    </form>
+    </div>
 
 {% endblock content %}
