@@ -1,6 +1,7 @@
 {% extends "balanced_diet/base.html" %}
 
 {% load crispy_forms_tags %}
+<title>{% block title %}Мой прогресс{% endblock title %}</title>
 {% block content %}
     {% if not not values %}
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>

@@ -1,5 +1,6 @@
 {% extends "balanced_diet/base.html" %}
 {% load crispy_forms_tags %}
+<title>{% block title %}Регистрация{% endblock title %}</title>
 {% block content %}
 <div style="max-width: 300px">
 <form method="post" action="{% url 'users:register' %}">
